@@ -146,6 +146,29 @@ let map = [{
   }
 ];
 /**********************/
+/*Función a utilizar en ejercicios, 3 a 6*/
+let printHtml = (title, array, typeArray, print) => {
+  let nodoH2 = document.createElement('h2');
+  nodoH2.innerHTML = title;
+  document.body.appendChild(nodoH2);
+  for (let data of array) {
+    let nodo = document.createElement('p');
+    if (typeArray == 'String' & print == 'all')
+      nodo.innerHTML = data;
+    else if (typeArray == 'Objects') {
+      let text = '';
+      if (print == 'all')
+        for (let attr in data)
+          text += data[attr] + ' - ';
+      else
+        for (let i = 0; i < print.length; i++)
+          text += data[print[i]] + ' - ';
+      nodo.innerHTML = text.substring(0, text.length - 3);
+    }
+    document.body.appendChild(nodo);
+  }
+};
+/*********************/
 
 /*1.- Agregar datos a arreglo a Traumatología*/
 map[1].array.push({
@@ -198,24 +221,7 @@ console.log(deleteLast);
 
 /*3. Imprimir en la página HTML, la lista de consultas médicas de Dental.
 8:30 - ANDREA ZUÑIGA - MARCELA RETAMAL - 11123425-6 - ISAPRE*/
-let printHtml = (title, array, typeArray) => {
-  let nodoH2 = document.createElement('h2');
-  nodoH2.innerHTML = title;
-  document.body.appendChild(nodoH2);
-  for (let data of array) {
-    let nodo = document.createElement('p');
-    if (typeArray == 'String')
-      nodo.innerHTML = data;
-    else if (typeArray == 'Objects') {
-      let text = '';
-      for (let attr in data)
-        text += data[attr] + ' - ';
-      nodo.innerHTML = text.substring(0, text.length - 3);
-    }
-    document.body.appendChild(nodo);
-  }
-};
-printHtml('Consultas Médicas Dental', map[2].array, 'Objects');
+printHtml('Consultas Médicas Dental', map[2].array, 'Objects', 'all');
 
 /*4.- Imprimir un listado total de todos los pacientes que se atendieron en el centro
 médico. Para esto, deberá unir todos los nombres de pacientes e imprimir uno por
@@ -225,4 +231,24 @@ for (let i = 0; i < 3; i++)
   for (let data of map[i].array)
     patients.push(data.paciente);
 let setPatients = new Set(patients); //Set para eliminar pacientes repetidos
-printHtml('Pacientes Centro Médico, (' + setPatients.size + ')', setPatients, 'String');
+printHtml('Pacientes Centro Médico, (' + setPatients.size + ')', setPatients, 'String', 'all');
+
+/*
+5. Filtrar aquellos pacientes que indican ser de ISAPRE en la lista de consultas médicas
+de Dental.
+Ejemplo:
+MARCELA RETAMAL - ISAPRE
+ANGEL MUÑOZ - ISAPRE
+ANA SEPULVEDA - ISAPRE
+*/
+let isapreDental = map[2].array.filter((element) => element.prevision == 'ISAPRE');
+printHtml('Pacientes con ISAPRE en Listado Dental, (' + isapreDental.length + ')', isapreDental, 'Objects', ['paciente', 'prevision']);
+
+/*
+6. Filtrar aquellos pacientes que indican ser de FONASA en la lista de consultas
+médicas de Traumatología.
+Ejemplo:
+PAULA SÁNCHEZ – FONASA
+*/
+let fonasaTraumatology = map[1].array.filter((element) => element.prevision == 'FONASA');
+printHtml('Pacientes con FONASA en Listado Traumatología, (' + fonasaTraumatology.length + ')', fonasaTraumatology, 'Objects', ['paciente', 'prevision']);
