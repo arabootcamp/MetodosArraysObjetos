@@ -212,8 +212,8 @@ map[1].array.push({
 });
 
 /*2.-  Eliminar el primer y último elemento del arreglo de Radiología.*/
-let deleteFirst = map[0].array.shift();
-let deleteLast = map[0].array.pop();
+let deleteFirst = map[0].array.shift(); //variable para almacenar dato eliminado.
+let deleteLast = map[0].array.pop(); //variable para almacenar dato eliminado.
 console.log(`\n\nshift para el primero del arreglo:`);
 console.log(deleteFirst);
 console.log(`\n\npop para el último del arreglo:`);
